@@ -1,0 +1,13 @@
+<ion-item class="custom-input" lines="none">
+  <ion-icon slot="start" *ngIf="icon" color="primary" [name]="icon"></ion-icon>
+  <ion-input
+  [type]="type"
+  [placeholder]="placeholder"
+  [autocomplete]="autocomplete"
+  [label]="label"
+  [formControl]="control"
+  labelPlacement="floating"></ion-input>
+  <ion-button *ngIf="isPassword" (click)="tooglePassword()" expand="block" fill="clear" shape="round" slot="end" >
+    <ion-icon slot="icon-only" [name]="showPassword ? 'eye' : 'eye-off'" color="primary"></ion-icon>
+  </ion-button>
+</ion-item>
