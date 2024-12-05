@@ -26,8 +26,41 @@ export class AuthPage {
 
     if(this.group.valid){
       this.firebaseSrvc.signIn(this.group.value as User).then((res)=>{
-        console.log(res);
-      }).catch((err)=>{})
+        this.utilsSrvc.presentToast({
+          message: ` Welcome ${res.user.displayName}`,
+          color: 'success',
+          position: 'top',
+          duration: 2000,
+          icon: 'checkmark-circle-outline',
+        });
+        this.getUserInfo(res.user.uid);
+      }).catch((err)=>{
+        this.utilsSrvc.presentToast({
+          message: err.message,
+          color: 'danger',
+          position: 'top',
+          duration: 2000,
+          icon: 'alert-circle-outline',
+        });
+      })
+    }
+  }
+
+  async getUserInfo(uid:string){
+    if(this.group.valid){
+      const loading = await this.utilsSrvc.presentLoading()
+      loading.present();
+      let path = `users/${uid}`;
+      this.firebaseSrvc.getDocumet(path).then((res)=>{
+        this.utilsSrvc.saveInLocalStorage('user', res);
+        this.utilsSrvc.routerLink('main/home');
+      })
+      .catch((err)=>{
+
+      })
+      .finally(()=>{
+        loading.dismiss();
+      })
     }
   }
 }

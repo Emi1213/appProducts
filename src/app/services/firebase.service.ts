@@ -53,6 +53,10 @@ export class FirebaseService {
   }
 
 
+  sendResetPasswordEmail(email:string){
+    return sendPasswordResetEmail(getAuth(), email);
+  }
+
   //obtener docs
 
   getCollectionData(path:string, collectionQuery?:any){
